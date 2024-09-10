@@ -1,4 +1,4 @@
-package lesser.GameofLife;
+package lesser.gameoflife;
 
 public class GameofLife {
     private int[][] grid;
