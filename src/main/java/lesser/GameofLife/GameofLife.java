@@ -41,13 +41,17 @@ public class GameofLife {
         int count = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) continue;
-                int nx = x + i, ny = y + j;
+                if (i == 0 && j == 0) {
+                    continue; // Added curly braces
+                }
+                int nx = x + i;
+                int ny = y + j;
                 if (nx >= 0 && ny >= 0 && nx < height && ny < width) {
                     count += grid[nx][ny];
                 }
             }
         }
+
         return count;
     }
 
