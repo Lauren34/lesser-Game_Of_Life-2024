@@ -1,11 +1,12 @@
 package lesser.gameoflife;
 
-public class GameofLife {
+
+public class GameOfLife {
     private int[][] grid;
     private int width;
     private int height;
 
-    public GameofLife(int width, int height) {
+    public GameOfLife(int width, int height) {
         this.width = width;
         this.height = height;
         this.grid = new int[height][width];
@@ -42,7 +43,7 @@ public class GameofLife {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (i == 0 && j == 0) {
-                    continue; // Added curly braces
+                    continue;
                 }
                 int nx = x + i;
                 int ny = y + j;

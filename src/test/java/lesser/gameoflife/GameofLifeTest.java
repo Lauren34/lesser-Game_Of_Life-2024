@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameofLifeTest {
 
     @Test
-    public void testInitialize() {
-        GameofLife game = new GameofLife(5, 5);
+    public void Initialize() {
+        GameOfLife game = new GameOfLife(5, 5);
         game.initialize();
         int[][] grid = game.getGrid();
         boolean hasAliveCells = false;
@@ -28,8 +28,8 @@ public class GameofLifeTest {
     }
 
     @Test
-    public void testNextGen() {
-        GameofLife game = new GameofLife(3, 3);
+    public void NextGen() {
+        GameOfLife game = new GameOfLife(3, 3);
         game.setCell(1, 0, 1);
         game.setCell(1, 1, 1);
         game.setCell(1, 2, 1);
@@ -45,8 +45,8 @@ public class GameofLifeTest {
     }
 
     @Test
-    public void testSetCell() {
-        GameofLife game = new GameofLife(3, 3);
+    public void SetCell() {
+        GameOfLife game = new GameOfLife(3, 3);
         game.setCell(1, 1, 1);
         int[][] grid = game.getGrid();
 
