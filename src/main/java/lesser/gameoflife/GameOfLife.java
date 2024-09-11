@@ -1,6 +1,8 @@
 package lesser.gameoflife;
 
 
+import java.util.Random;
+
 public class GameOfLife {
     private int[][] grid;
     private int width;
@@ -13,12 +15,15 @@ public class GameOfLife {
     }
 
     public void initialize() {
+        Random random = new Random();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                grid[i][j] = (int) (Math.random() * 2);
+                grid[i][j] = random.nextBoolean() ? 1 : 0;
             }
         }
     }
+
+
 
     public void nextGen() {
         int[][] nextGrid = new int[height][width];
