@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameofLifeTest {
 
     @Test
-    public void Initialize() {
+    public void initialize() {
         GameOfLife game = new GameOfLife(5, 5);
         game.initialize();
         int[][] grid = game.getGrid();
@@ -28,7 +28,7 @@ public class GameofLifeTest {
     }
 
     @Test
-    public void NextGen() {
+    public void nextGen() {
         GameOfLife game = new GameOfLife(3, 3);
         game.setCell(1, 0, 1);
         game.setCell(1, 1, 1);
@@ -45,7 +45,7 @@ public class GameofLifeTest {
     }
 
     @Test
-    public void SetCell() {
+    public void setCell() {
         GameOfLife game = new GameOfLife(3, 3);
         game.setCell(1, 1, 1);
         int[][] grid = game.getGrid();
