@@ -50,10 +50,10 @@ public class GameOfLifeComponent extends JComponent {
         int gridWidth = grid[0].length * cellSize;
         int gridHeight = grid.length * cellSize;
 
-        // Calculate the offset to center the grid
         int xOffset = (getWidth() - gridWidth) / 2;
         int yOffset = (getHeight() - gridHeight) / 2;
 
+        // Draw cells
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 int x = j * cellSize + xOffset;
@@ -61,12 +61,11 @@ public class GameOfLifeComponent extends JComponent {
 
                 if (grid[i][j] == 1) {
                     g.fillRect(x, y, cellSize, cellSize);
-                } else {
-                    g.drawRect(x, y, cellSize, cellSize);
                 }
             }
         }
 
+        //grid lines
         g.setColor(Color.LIGHT_GRAY);
         for (int i = 0; i <= grid.length; i++) {
             int y = i * cellSize + yOffset;
