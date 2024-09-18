@@ -6,8 +6,10 @@ import java.awt.event.*;
 
 public class GameOfLifeComponent extends JComponent {
 
-    private final GameOfLife game;
-    private final int cellSize = 20; // Size for each cell
+    private static  GameOfLife game;
+    private static int cellSize = 20;
+
+    private boolean running = false;
 
     public GameOfLifeComponent(GameOfLife game) {
         this.game = game;
@@ -64,10 +66,17 @@ public class GameOfLifeComponent extends JComponent {
                 }
             }
         }
-    }
 
-    // Start or stop the simulation
-    private boolean running = false;
+        g.setColor(Color.LIGHT_GRAY);
+        for (int i = 0; i <= grid.length; i++) {
+            int y = i * cellSize + yOffset;
+            g.drawLine(xOffset, y, xOffset + gridWidth, y);
+        }
+        for (int j = 0; j <= grid[0].length; j++) {
+            int x = j * cellSize + xOffset;
+            g.drawLine(x, yOffset, x, yOffset + gridHeight);
+        }
+    }
 
     public void toggleRunning() {
         running = !running;
