@@ -10,7 +10,7 @@ import java.net.URLConnection;
 public class GameOfLifeFrame extends JFrame {
 
     private final GameOfLife game = new GameOfLife(10, 10);
-    private final GameOfLifeRleParser parser; // Declare the parser instance
+    private final GameOfLifeRleParser parser;
 
     public GameOfLifeFrame() {
         setSize(800, 600);
@@ -18,12 +18,12 @@ public class GameOfLifeFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        parser = new GameOfLifeRleParser(game); // Initialize the parser with the game instance
+        parser = new GameOfLifeRleParser(game);
 
         initializeBlinkerPattern(game);
 
         GameOfLifeComponent gameComponent = new GameOfLifeComponent(game);
-        add(gameComponent, BorderLayout.CENTER); // Add to CENTER
+        add(gameComponent, BorderLayout.CENTER);
 
         // Control panel with play/pause buttons
         JPanel controlPanel = new JPanel();
@@ -32,7 +32,7 @@ public class GameOfLifeFrame extends JFrame {
         JButton pauseButton = new JButton("⏸");
         pauseButton.addActionListener(e -> gameComponent.toggleRunning());
         JButton loadButton = new JButton("Load Rle");
-        loadButton.addActionListener(e -> loadRlePattern()); // Correct usage here
+        loadButton.addActionListener(e -> loadRlePattern());
         controlPanel.add(loadButton);
         controlPanel.add(playButton);
         controlPanel.add(pauseButton);
@@ -60,16 +60,28 @@ public class GameOfLifeFrame extends JFrame {
                 try {
                     URL url = new URL(urlString);
                     URLConnection connection = url.openConnection();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    parser.loadPatternFromReader(reader);  // Use the parser instance to load the pattern
-                    repaint(); // Repaint after loading the pattern
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream())
+                    );
+                    parser.loadPatternFromReader(reader);
+                    repaint();
                     reader.close();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Invalid URL", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Invalid URL",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 } catch (IOException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Error loading RLE from URL", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Error loading RLE from URL",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         } else if (choice == 1) {
@@ -78,11 +90,18 @@ public class GameOfLifeFrame extends JFrame {
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 try {
-                    parser.loadPatternFromFile(selectedFile.getAbsolutePath()); // Use the parser instance to load the pattern from file
-                    repaint(); // Repaint after loading the pattern
+                    parser.loadPatternFromFile(
+                            selectedFile.getAbsolutePath()
+                    );
+                    repaint();
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Error loading RLE file", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Error loading RLE file",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         }
