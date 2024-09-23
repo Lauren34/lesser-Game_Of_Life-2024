@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 public class GameOfLifeRLEParser {
 
-
     public static void loadPatternFromFile(GameOfLife game, String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             loadPatternFromReader(game, reader);  // Delegate to the new method
