@@ -8,13 +8,19 @@ import java.util.regex.Pattern;
 
 public class GameOfLifeRleParser {
 
-    public static void loadPatternFromFile(GameOfLife game, String filePath) throws IOException {
+    private GameOfLife game;
+
+    public GameOfLifeRleParser(GameOfLife game) {
+        this.game = game;
+    }
+
+    public void loadPatternFromFile(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            loadPatternFromReader(game, reader);  // Delegate to the new method
+            loadPatternFromReader(reader);
         }
     }
 
-    public static void loadPatternFromReader(GameOfLife game, BufferedReader reader) throws IOException {
+    public void loadPatternFromReader(BufferedReader reader) throws IOException {
         String line;
         int x = 0;
         int y = 0;
@@ -35,7 +41,7 @@ public class GameOfLifeRleParser {
                     int width = Integer.parseInt(matcher.group(1));
                     int height = Integer.parseInt(matcher.group(2));
                     game.initializeWithSize(width, height);
-                    inPattern = true; // Start parsing pattern
+                    inPattern = true; // Start parsing the pattern
                 }
                 continue;
             }

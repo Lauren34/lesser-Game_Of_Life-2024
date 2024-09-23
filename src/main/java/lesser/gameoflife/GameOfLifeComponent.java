@@ -6,8 +6,8 @@ import java.awt.event.*;
 
 public class GameOfLifeComponent extends JComponent {
 
-    private static GameOfLife game;
-    private static int cellSize = 20;
+    private GameOfLife game;
+    private int cellSize = 20;
 
     private boolean running = false;
 
@@ -65,7 +65,7 @@ public class GameOfLifeComponent extends JComponent {
             }
         }
 
-        //grid lines
+        // Draw grid lines
         g.setColor(Color.LIGHT_GRAY);
         for (int i = 0; i <= grid.length; i++) {
             int y = i * cellSize + yOffset;

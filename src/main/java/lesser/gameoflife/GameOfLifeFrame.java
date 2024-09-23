@@ -10,12 +10,15 @@ import java.net.URLConnection;
 public class GameOfLifeFrame extends JFrame {
 
     private final GameOfLife game = new GameOfLife(10, 10);
+    private final GameOfLifeRleParser parser; // Declare the parser instance
 
     public GameOfLifeFrame() {
         setSize(800, 600);
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+
+        parser = new GameOfLifeRleParser(game); // Initialize the parser with the game instance
 
         initializeBlinkerPattern(game);
 
@@ -48,19 +51,26 @@ public class GameOfLifeFrame extends JFrame {
 
         if (choice == 0) {
             // Load from URL
-            try {
-                URL url = new URL("https://conwaylife.com/patterns/glider.rle");
-                URLConnection connection = url.openConnection();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                GameOfLifeRleParser.loadPatternFromReader(game, reader);  // Corrected to use loadPatternFromReader
-                repaint(); // Repaint after loading the pattern
-                reader.close();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Invalid URL", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error loading RLE from URL", "Error", JOptionPane.ERROR_MESSAGE);
+            String urlString = JOptionPane.showInputDialog(
+                    this,
+                    "Enter the URL of the RLE pattern:",
+                    "https://conwaylife.com/patterns/glider.rle"
+            );
+            if (urlString != null && !urlString.isEmpty()) {
+                try {
+                    URL url = new URL(urlString);
+                    URLConnection connection = url.openConnection();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    parser.loadPatternFromReader(reader);  // Use the parser instance to load the pattern
+                    repaint(); // Repaint after loading the pattern
+                    reader.close();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Invalid URL", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error loading RLE from URL", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } else if (choice == 1) {
             // Load from File
@@ -68,7 +78,7 @@ public class GameOfLifeFrame extends JFrame {
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 try {
-                    GameOfLifeRleParser.loadPatternFromFile(game, selectedFile.getAbsolutePath());
+                    parser.loadPatternFromFile(selectedFile.getAbsolutePath()); // Use the parser instance to load the pattern from file
                     repaint(); // Repaint after loading the pattern
                 } catch (IOException ex) {
                     ex.printStackTrace();
