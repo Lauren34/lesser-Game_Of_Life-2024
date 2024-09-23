@@ -67,7 +67,7 @@ public class GameofLifeTest {
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
         // When
-        GameOfLifeRLEParser.loadPatternFromReader(game, reader);
+        GameOfLifeRleParser.loadPatternFromReader(game, reader);
         reader.close();
 
         // Then

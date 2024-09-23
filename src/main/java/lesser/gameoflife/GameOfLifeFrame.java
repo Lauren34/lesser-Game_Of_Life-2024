@@ -52,7 +52,7 @@ public class GameOfLifeFrame extends JFrame {
                 URL url = new URL("https://conwaylife.com/patterns/glider.rle");
                 URLConnection connection = url.openConnection();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                GameOfLifeRLEParser.loadPatternFromReader(game, reader);  // Corrected to use loadPatternFromReader
+                GameOfLifeRleParser.loadPatternFromReader(game, reader);  // Corrected to use loadPatternFromReader
                 repaint(); // Repaint after loading the pattern
                 reader.close();
             } catch (MalformedURLException e) {
@@ -68,7 +68,7 @@ public class GameOfLifeFrame extends JFrame {
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 try {
-                    GameOfLifeRLEParser.loadPatternFromFile(game, selectedFile.getAbsolutePath());
+                    GameOfLifeRleParser.loadPatternFromFile(game, selectedFile.getAbsolutePath());
                     repaint(); // Repaint after loading the pattern
                 } catch (IOException ex) {
                     ex.printStackTrace();

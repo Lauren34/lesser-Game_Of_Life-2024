@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GameOfLifeRLEParser {
+public class GameOfLifeRleParser {
 
     public static void loadPatternFromFile(GameOfLife game, String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -69,7 +69,8 @@ public class GameOfLifeRLEParser {
                             case '!': // End of pattern
                                 return;
                             default: // Default case for unexpected characters
-                                throw new IllegalArgumentException("Unexpected character in pattern: " + c);
+                                System.err.println("Warning: Unexpected character in pattern: " + c);
+                                break;
                         }
                         count = 0; // Reset count after processing each character
                     }
