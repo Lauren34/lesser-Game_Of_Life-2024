@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 public class GameOfLifeComponent extends JComponent {
 
-    private static  GameOfLife game;
+    private static GameOfLife game;
     private static int cellSize = 20;
 
     private boolean running = false;
