@@ -68,7 +68,7 @@ public class GameOfLifeRLEParser {
                                 break;
                             case '!': // End of pattern
                                 return;
-                            default: // Default case for switch
+                            default: // Default case for unexpected characters
                                 throw new IllegalArgumentException("Unexpected character in pattern: " + c);
                         }
                         count = 0; // Reset count after processing each character
