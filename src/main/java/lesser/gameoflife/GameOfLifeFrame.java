@@ -28,15 +28,15 @@ public class GameOfLifeFrame extends JFrame {
         playButton.addActionListener(e -> gameComponent.toggleRunning());
         JButton pauseButton = new JButton("⏸");
         pauseButton.addActionListener(e -> gameComponent.toggleRunning());
-        JButton loadButton = new JButton("Load RLE");
-        loadButton.addActionListener(e -> loadRLEPattern()); // Correct usage here
+        JButton loadButton = new JButton("Load Rle");
+        loadButton.addActionListener(e -> loadRlePattern()); // Correct usage here
         controlPanel.add(loadButton);
         controlPanel.add(playButton);
         controlPanel.add(pauseButton);
         add(controlPanel, BorderLayout.SOUTH);
     }
 
-    private void loadRLEPattern() {
+    private void loadRlePattern() {
         String[] options = {"Load from URL", "Load from File"};
         int choice = JOptionPane.showOptionDialog(
                 this,

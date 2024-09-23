@@ -8,17 +8,17 @@ import java.util.regex.Pattern;
 
 public class GameOfLifeRLEParser {
 
-    // Method to load pattern from file (no changes here)
+
     public static void loadPatternFromFile(GameOfLife game, String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             loadPatternFromReader(game, reader);  // Delegate to the new method
         }
     }
 
-    // New method to load pattern from any BufferedReader (file, URL, etc.)
     public static void loadPatternFromReader(GameOfLife game, BufferedReader reader) throws IOException {
         String line;
-        int x = 0, y = 0;
+        int x = 0;
+        int y = 0;
         boolean inPattern = false;
 
         Pattern patternSize = Pattern.compile("x\\s*=\\s*(\\d+),\\s*y\\s*=\\s*(\\d+)");
@@ -48,7 +48,9 @@ public class GameOfLifeRLEParser {
                     if (Character.isDigit(c)) {
                         count = count * 10 + (c - '0');
                     } else {
-                        if (count == 0) count = 1;
+                        if (count == 0) {
+                            count = 1;
+                        }
 
                         switch (c) {
                             case 'b': // Dead cells
@@ -67,6 +69,8 @@ public class GameOfLifeRLEParser {
                                 break;
                             case '!': // End of pattern
                                 return;
+                            default: // Default case for switch
+                                throw new IllegalArgumentException("Unexpected character in pattern: " + c);
                         }
                         count = 0; // Reset count after processing each character
                     }
