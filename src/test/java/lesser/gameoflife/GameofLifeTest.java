@@ -59,7 +59,7 @@ public class GameofLifeTest {
     }
 
     @Test
-    void loadGliderPatternFromUrl() throws IOException {
+    void loadGliderPatternFromReader() throws IOException {
         // Given
         GameOfLife game = new GameOfLife(10, 10);
         URL url = new URL("https://conwaylife.com/patterns/glider.rle");
