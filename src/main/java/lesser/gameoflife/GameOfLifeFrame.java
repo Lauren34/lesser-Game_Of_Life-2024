@@ -2,8 +2,10 @@ package lesser.gameoflife;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class GameOfLifeFrame extends JFrame {
 
@@ -34,17 +36,44 @@ public class GameOfLifeFrame extends JFrame {
         add(controlPanel, BorderLayout.SOUTH);
     }
 
-    // Move the loadRLEPattern method outside the constructor
     private void loadRLEPattern() {
-        JFileChooser fileChooser = new JFileChooser();
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
+        String[] options = {"Load from URL", "Load from File"};
+        int choice = JOptionPane.showOptionDialog(
+                this,
+                "Choose an option to load the RLE pattern",
+                "Load RLE Pattern",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, options, options[0]);
+
+        if (choice == 0) {
+            // Load from URL
             try {
-                GameOfLifeRLEParser.loadPatternFromFile(game, selectedFile.getAbsolutePath());
+                URL url = new URL("https://conwaylife.com/patterns/glider.rle");
+                URLConnection connection = url.openConnection();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                GameOfLifeRLEParser.loadPatternFromReader(game, reader);  // Corrected to use loadPatternFromReader
                 repaint(); // Repaint after loading the pattern
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error loading RLE file", "Error", JOptionPane.ERROR_MESSAGE);
+                reader.close();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Invalid URL", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error loading RLE from URL", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (choice == 1) {
+            // Load from File
+            JFileChooser fileChooser = new JFileChooser();
+            if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                try {
+                    GameOfLifeRLEParser.loadPatternFromFile(game, selectedFile.getAbsolutePath());
+                    repaint(); // Repaint after loading the pattern
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error loading RLE file", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
