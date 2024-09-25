@@ -38,8 +38,6 @@ public class GameOfLifeRleParserTest {
         assertEquals(3, game.getGrid()[0].length, "Grid width should be 3");  // Adjust grid width check
 
         // Check the expected pattern
-        for (int i = 0; i < expectedGrid.length; i++) {
-            assertArrayEquals(expectedGrid[i], game.getGrid()[i], "Row " + i + " does not match the expected values.");
+        assertArrayEquals(expectedGrid, game.getGrid());
         }
     }
-}
