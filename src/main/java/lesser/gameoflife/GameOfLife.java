@@ -23,7 +23,11 @@ public class GameOfLife {
         }
     }
 
-
+    public void initializeWithSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.grid = new int[height][width]; // Resize the grid
+    }
 
     public void nextGen() {
         int[][] nextGrid = new int[height][width];

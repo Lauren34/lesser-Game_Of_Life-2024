@@ -1,6 +1,11 @@
 package lesser.gameoflife;
 
 import org.junit.jupiter.api.Test;
+
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameofLifeTest {
@@ -52,4 +57,5 @@ public class GameofLifeTest {
 
         assertEquals(1, grid[1][1], "Cell (1,1) should be set to alive");
     }
+
 }
