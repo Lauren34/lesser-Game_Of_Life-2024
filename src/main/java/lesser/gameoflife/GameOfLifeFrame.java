@@ -33,7 +33,26 @@ public class GameOfLifeFrame extends JFrame {
         pauseButton.addActionListener(e -> gameComponent.toggleRunning());
         JButton loadButton = new JButton("Load Rle");
         loadButton.addActionListener(e -> loadRlePattern());
+
+        // Add the Paste button
+        JButton pasteButton = new JButton("Paste");
+        pasteButton.addActionListener(e -> {
+            try {
+                parser.loadFromClipboard();
+                repaint();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error loading RLE from clipboard",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        });
+
         controlPanel.add(loadButton);
+        controlPanel.add(pasteButton);
         controlPanel.add(playButton);
         controlPanel.add(pauseButton);
         add(controlPanel, BorderLayout.SOUTH);
