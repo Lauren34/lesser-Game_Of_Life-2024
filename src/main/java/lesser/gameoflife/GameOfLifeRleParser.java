@@ -20,7 +20,8 @@ public class GameOfLifeRleParser {
     }
 
     public void loadFromClipboard() throws Exception {
-        String clipboardContent = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+        String clipboardContent = (String) Toolkit.getDefaultToolkit()
+                .getSystemClipboard().getData(DataFlavor.stringFlavor);
         clipboardContent = clipboardContent.trim();
 
         if (isValidUrl(clipboardContent)) {
@@ -122,7 +123,7 @@ public class GameOfLifeRleParser {
                                 break;
                             case '$': // End of row
                                 y++;
-                                x = (game.getGrid()[0].length - patternWidth) / 2; // Reset x to start of next row
+                                x = (game.getGrid()[0].length - patternWidth) / 2;
                                 break;
                             case '!': // End of pattern
                                 return;
