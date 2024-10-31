@@ -72,5 +72,4 @@ public class GameOfLifeControllerTest {
         verify(rle).loadPatternFromUrl(url);
         verify(view).repaint();
     }
-
 }
