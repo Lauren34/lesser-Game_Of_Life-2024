@@ -21,8 +21,8 @@ public class GameOfLifeControllerTest {
         GameOfLife model = mock(GameOfLife.class);
         GameOfLifeComponent view = mock(GameOfLifeComponent.class);
         GameOfLifeRleParser rle = mock(GameOfLifeRleParser.class);
+        final GameOfLifeController controller = new GameOfLifeController(model, view, rle);
 
-        GameOfLifeController controller = new GameOfLifeController(model, view, rle);
         doReturn(10).when(view).getCellSize();
         doReturn(10).when(view).getWidth();
         doReturn(10).when(view).getHeight();
@@ -41,8 +41,8 @@ public class GameOfLifeControllerTest {
         GameOfLife model = mock(GameOfLife.class);
         GameOfLifeComponent view = mock(GameOfLifeComponent.class);
         GameOfLifeRleParser rle = mock(GameOfLifeRleParser.class);
+        final GameOfLifeController controller = new GameOfLifeController(model, view, rle);
 
-        GameOfLifeController controller = new GameOfLifeController(model, view, rle);
         String word = "";
 
         // when
@@ -59,8 +59,8 @@ public class GameOfLifeControllerTest {
         GameOfLife model = mock(GameOfLife.class);
         GameOfLifeComponent view = mock(GameOfLifeComponent.class);
         GameOfLifeRleParser rle = spy(new GameOfLifeRleParser(model));
+        final GameOfLifeController controller = new GameOfLifeController(model, view, rle);
 
-        GameOfLifeController controller = new GameOfLifeController(model, view, rle);
         String url = "https://conwaylife.com/patterns/glider.rle";
 
         doNothing().when(rle).loadPatternFromUrl(url);
