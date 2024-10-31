@@ -18,16 +18,13 @@ public class GameOfLifeController {
 
     private final GameOfLife model;
     private final GameOfLifeComponent view;
-
     private final GameOfLifeRleParser rle;
-
 
     public GameOfLifeController(GameOfLife model, GameOfLifeComponent view, GameOfLifeRleParser rle) {
         this.rle = rle;
         this.model = model;
         this.view = view;
     }
-
 
     public void paste(String clipboardContents) {
         try {
@@ -36,20 +33,19 @@ public class GameOfLifeController {
                 String rleContents = IOUtils.toString(in, StandardCharsets.UTF_8);
                 rle.loadPatternFromText(rleContents);
             } else if (new File(clipboardContents).exists()) {
-                FileInputStream fisTargetzfile = new FileInputStream(new File(clipboardContents));
-                String rleContents = IOUtils.toString(fisTargetzfile, StandardCharsets.UTF_8);
+                FileInputStream fisTargetFile = new FileInputStream(new File(clipboardContents));
+                String rleContents = IOUtils.toString(fisTargetFile, StandardCharsets.UTF_8);
                 rle.loadPatternFromText(rleContents);
             } else {
                 rle.loadPatternFromText(clipboardContents);
             }
             view.repaint();
-        } catch(MalformedURLException e){
+        } catch (MalformedURLException e) {
             throw new RuntimeException(e);
-        } catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     public void toggleCell(int x, int y) {
         addMouseListener(new MouseAdapter() {
@@ -57,14 +53,13 @@ public class GameOfLifeController {
             public void mouseClicked(MouseEvent e) {
                 int xOffset = (x - model.getGrid()[0].length * view.getCellSize()) / 2;
                 int yOffset = (y - model.getGrid().length * view.getCellSize()) / 2;
-                int x = (e.getY() - yOffset) / view.getCellSize();
-                int y = (e.getX() - xOffset) / view.getCellSize();
+                int cellX = (e.getY() - yOffset) / view.getCellSize();
+                int cellY = (e.getX() - xOffset) / view.getCellSize();
                 int[][] grid = model.getGrid();
-                if (x >= 0 && x < grid.length && y >= 0 && y < grid[0].length) {
-                    model.setCell(x, y, grid[x][y] == 1 ? 0 : 1);
+                if (cellX >= 0 && cellX < grid.length && cellY >= 0 && cellY < grid[0].length) {
+                    model.setCell(cellX, cellY, grid[cellX][cellY] == 1 ? 0 : 1);
                     view.repaint();
                 }
-
             }
         });
     }

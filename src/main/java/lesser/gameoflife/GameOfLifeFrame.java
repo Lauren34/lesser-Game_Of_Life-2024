@@ -14,7 +14,6 @@ public class GameOfLifeFrame extends JFrame {
 
     private final GameOfLife game = new GameOfLife(10, 10);
     private final GameOfLifeRleParser parser;
-    private final GameOfLifeRleParser rle;
 
     public GameOfLifeFrame() {
         setSize(800, 600);
@@ -23,11 +22,10 @@ public class GameOfLifeFrame extends JFrame {
         setLayout(new BorderLayout());
 
         parser = new GameOfLifeRleParser(game);
-        rle = new GameOfLifeRleParser(game);
         initializeBlinkerPattern(game);
 
         GameOfLifeComponent gameComponent = new GameOfLifeComponent(game);
-        GameOfLifeController controller = new GameOfLifeController(game, gameComponent,rle);
+        GameOfLifeController controller = new GameOfLifeController(game, gameComponent, parser);
         add(gameComponent, BorderLayout.CENTER);
 
         gameComponent.addMouseListener(new MouseAdapter() {
@@ -44,13 +42,15 @@ public class GameOfLifeFrame extends JFrame {
             }
         });
 
-        // Control panel with play/pause buttons
+        // Control panel with play/pause and load buttons
         JPanel controlPanel = new JPanel();
         JButton playButton = new JButton("▶");
         playButton.addActionListener(e -> gameComponent.toggleRunning());
+
         JButton pauseButton = new JButton("⏸");
         pauseButton.addActionListener(e -> gameComponent.toggleRunning());
-        JButton loadButton = new JButton("Load Rle");
+
+        JButton loadButton = new JButton("Load RLE");
         loadButton.addActionListener(e -> loadRlePattern());
 
         // Add the Paste button
@@ -128,9 +128,7 @@ public class GameOfLifeFrame extends JFrame {
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 try {
-                    parser.loadPatternFromFile(
-                            selectedFile.getAbsolutePath()
-                    );
+                    parser.loadPatternFromFile(selectedFile.getAbsolutePath());
                     repaint();
                 } catch (IOException ex) {
                     ex.printStackTrace();
