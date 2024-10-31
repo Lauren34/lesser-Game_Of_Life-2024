@@ -2,6 +2,9 @@ package lesser.gameoflife;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,6 +14,7 @@ public class GameOfLifeFrame extends JFrame {
 
     private final GameOfLife game = new GameOfLife(10, 10);
     private final GameOfLifeRleParser parser;
+    private final GameOfLifeRleParser rle;
 
     public GameOfLifeFrame() {
         setSize(800, 600);
@@ -19,11 +23,26 @@ public class GameOfLifeFrame extends JFrame {
         setLayout(new BorderLayout());
 
         parser = new GameOfLifeRleParser(game);
-
+        rle = new GameOfLifeRleParser(game);
         initializeBlinkerPattern(game);
 
         GameOfLifeComponent gameComponent = new GameOfLifeComponent(game);
+        GameOfLifeController controller = new GameOfLifeController(game, gameComponent,rle);
         add(gameComponent, BorderLayout.CENTER);
+
+        gameComponent.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
+
+        gameComponent.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
 
         // Control panel with play/pause buttons
         JPanel controlPanel = new JPanel();

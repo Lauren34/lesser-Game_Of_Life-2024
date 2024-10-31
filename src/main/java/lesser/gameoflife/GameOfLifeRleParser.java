@@ -25,10 +25,7 @@ public class GameOfLifeRleParser {
         clipboardContent = clipboardContent.trim();
 
         if (isValidUrl(clipboardContent)) {
-            // Use the modified loadPatternFromUrl method with an InputStream
-            try (InputStream in = new URL(clipboardContent).openStream()) {
-                loadPatternFromUrl(in);
-            }
+            loadPatternFromUrl(clipboardContent);
         } else if (isValidFile(clipboardContent)) {
             loadPatternFromFile(clipboardContent);
         } else {
@@ -50,9 +47,11 @@ public class GameOfLifeRleParser {
         return file.exists() && file.isFile();
     }
 
-    public void loadPatternFromUrl(InputStream in) throws IOException {
-        String rleContents = IOUtils.toString(in, StandardCharsets.UTF_8);
-        loadPatternFromText(rleContents);
+    public void loadPatternFromUrl(String url) throws IOException {
+        try (InputStream in = new URL(url).openStream()) {
+            String rleContents = IOUtils.toString(in, StandardCharsets.UTF_8);
+            loadPatternFromText(rleContents);
+        }
     }
 
     public void loadPatternFromText(String rleText) throws IOException {

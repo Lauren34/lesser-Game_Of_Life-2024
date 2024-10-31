@@ -76,7 +76,9 @@ public class GameOfLifeComponent extends JComponent {
             g.drawLine(x, yOffset, x, yOffset + gridHeight);
         }
     }
-
+    public int getCellSize(){
+        return cellSize;
+    }
     public void toggleRunning() {
         running = !running;
     }
