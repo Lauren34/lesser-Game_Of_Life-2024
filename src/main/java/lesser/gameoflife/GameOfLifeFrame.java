@@ -2,6 +2,9 @@ package lesser.gameoflife;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,21 +22,56 @@ public class GameOfLifeFrame extends JFrame {
         setLayout(new BorderLayout());
 
         parser = new GameOfLifeRleParser(game);
-
         initializeBlinkerPattern(game);
 
         GameOfLifeComponent gameComponent = new GameOfLifeComponent(game);
+        GameOfLifeController controller = new GameOfLifeController(game, gameComponent, parser);
         add(gameComponent, BorderLayout.CENTER);
 
-        // Control panel with play/pause buttons
+        gameComponent.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
+
+        gameComponent.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
+
+        // Control panel with play/pause and load buttons
         JPanel controlPanel = new JPanel();
         JButton playButton = new JButton("▶");
         playButton.addActionListener(e -> gameComponent.toggleRunning());
+
         JButton pauseButton = new JButton("⏸");
         pauseButton.addActionListener(e -> gameComponent.toggleRunning());
-        JButton loadButton = new JButton("Load Rle");
+
+        JButton loadButton = new JButton("Load RLE");
         loadButton.addActionListener(e -> loadRlePattern());
+
+        // Add the Paste button
+        JButton pasteButton = new JButton("Paste");
+        pasteButton.addActionListener(e -> {
+            try {
+                parser.loadFromClipboard();
+                repaint();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Error loading RLE from clipboard",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        });
+
         controlPanel.add(loadButton);
+        controlPanel.add(pasteButton);
         controlPanel.add(playButton);
         controlPanel.add(pauseButton);
         add(controlPanel, BorderLayout.SOUTH);
@@ -90,9 +128,7 @@ public class GameOfLifeFrame extends JFrame {
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 try {
-                    parser.loadPatternFromFile(
-                            selectedFile.getAbsolutePath()
-                    );
+                    parser.loadPatternFromFile(selectedFile.getAbsolutePath());
                     repaint();
                 } catch (IOException ex) {
                     ex.printStackTrace();

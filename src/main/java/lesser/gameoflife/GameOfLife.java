@@ -9,10 +9,23 @@ public class GameOfLife {
     private int height;
 
     public GameOfLife(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.grid = new int[height][width];
+        // Ensure minimum width and height of 100
+        if (width < 100) {
+            this.width = 100;
+        } else {
+            this.width = width;
+        }
+
+        if (height < 100) {
+            this.height = 100;
+        } else {
+            this.height = height;
+        }
+
+        // Initialize the grid with the updated width and height
+        this.grid = new int[this.height][this.width];
     }
+
 
     public void initialize() {
         Random random = new Random();
@@ -26,7 +39,7 @@ public class GameOfLife {
     public void initializeWithSize(int width, int height) {
         this.width = width;
         this.height = height;
-        this.grid = new int[height][width]; // Resize the grid
+        this.grid = new int[height][width];
     }
 
     public void nextGen() {

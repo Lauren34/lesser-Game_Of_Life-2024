@@ -77,6 +77,10 @@ public class GameOfLifeComponent extends JComponent {
         }
     }
 
+    public int getCellSize() {
+        return cellSize;
+    }
+
     public void toggleRunning() {
         running = !running;
     }
